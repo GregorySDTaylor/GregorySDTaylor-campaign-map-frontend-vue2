@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios";
 export default axios.create({
-    baseURL: `https://campaign-map.herokuapp.com/rest-api`
-})
+  baseURL: `https://campaign-map.herokuapp.com/rest-api`,
+});

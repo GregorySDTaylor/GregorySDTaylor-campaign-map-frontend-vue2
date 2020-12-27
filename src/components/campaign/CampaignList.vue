@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Campaigns</h1>
-    <router-link to="/new-campaign">new campaign...</router-link>
+    <router-link to="/campaign-new">new campaign...</router-link>
     <ul>
       <li v-for="campaign in campaigns" :key="campaign._links.self.href">
         <router-link
@@ -37,6 +37,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-</style>

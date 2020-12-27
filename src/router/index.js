@@ -10,6 +10,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
+    name: "campaign-list",
     component: CampaignList,
   },
   {
@@ -19,14 +20,14 @@ const routes = [
     props: true,
   },
   {
-    path: "/edit-campaign/:campaignUrl",
-    name: "edit-campaign",
+    path: "/campaign-edit/:campaignUrl",
+    name: "campaign-edit",
     component: EditCampaign,
     props: true,
   },
   {
-    path: "/new-campaign",
-    name: "new-campaign",
+    path: "/campaign-new",
+    name: "campaign-new",
     component: NewCampaign,
   },
 ];

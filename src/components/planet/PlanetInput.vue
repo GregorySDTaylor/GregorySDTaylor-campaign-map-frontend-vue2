@@ -1,12 +1,5 @@
 <template>
   <div>
-    <label for="campaign">campaign</label>
-    <input
-      type="url"
-      id="campaign"
-      :value="campaign"
-      @input="$emit('update:campaign', $event.target.value)"
-    />
     <label for="name">name</label>
     <input
       type="text"

@@ -1,10 +1,11 @@
 <template>
   <div>
-    <form>
+    <form @submit="updateCampaign">
       <h1>Edit Campaign</h1>
       <campaign-input v-bind.sync="campaign" />
       <img :src="campaign.imageUrl" />
       <img :src="campaign.mapUrl" />
+      <input type="submit" value="update campaign" />
     </form>
   </div>
 </template>
@@ -13,6 +14,7 @@
 import CampaignInput from "@/components/campaign/CampaignInput.vue";
 import axios from "@/campaignmap-restapi-axios.js";
 export default {
+  name: "EditCampaign",
   components: {
     CampaignInput,
   },
@@ -28,13 +30,12 @@ export default {
     };
   },
     methods: {
-    createCampaign() {
-      axios.post("/campaigns", this.campaign).then((response) => {
-        console.log(response);
+    updateCampaign() {
+      axios.put(this.campaignUrl, this.campaign).then(() => {
         this.$router.push({
           name: "campaign",
           params: {
-            campaignUrl: response.data._links.self.href,
+            campaignUrl: this.campaignUrl,
           },
         });
       });

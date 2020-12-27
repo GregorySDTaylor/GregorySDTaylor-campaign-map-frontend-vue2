@@ -30,7 +30,6 @@ export default {
   methods: {
     createCampaign() {
       axios.post("/campaigns", this.campaign).then((response) => {
-        console.log(response);
         this.$router.push({
           name: "campaign",
           params: {

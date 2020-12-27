@@ -14,19 +14,24 @@
     <h2>{{ campaign.name }}</h2>
     <p>{{ campaign.description }}</p>
     <ul>
+      <router-link :to="{
+        name: 'planet-new',
+        params: { campaignUrl: campaign._links.self.href },
+      }"
+      >add planet...</router-link>
       <li v-for="planet in planets" :key="planet._links.self.href">
-        <!-- <router-link
+        <router-link
           :to="{
             name: 'planet',
             params: { planetUrl: planet._links.self.href },
           }"
-        > -->
+        >
           <div>
             <img :src="planet.imageUrl" />
             <h2>{{ planet.name }}</h2>
             <p>{{ planet.description }}</p>
           </div>
-        <!-- </router-link> -->
+        </router-link>
       </li>
     </ul>
   </div>

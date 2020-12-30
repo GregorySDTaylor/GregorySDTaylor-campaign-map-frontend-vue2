@@ -17,6 +17,7 @@ export default {
     LocationInput,
   },
   props: ["planetUrl"],
+  name: "NewLocation",
   data() {
     return {
       location: {

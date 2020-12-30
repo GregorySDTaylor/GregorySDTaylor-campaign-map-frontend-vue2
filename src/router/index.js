@@ -9,6 +9,8 @@ import NewPlanet from "@/components/planet/NewPlanet.vue"
 import Planet from "@/components/planet/Planet.vue"
 import EditLocation from "@/components/location/EditLocation.vue"
 import NewLocation from "@/components/location/NewLocation.vue"
+import EditFaction from "@/components/faction/EditFaction.vue"
+import NewFaction from "@/components/faction/NewFaction.vue"
 
 Vue.use(VueRouter);
 
@@ -63,6 +65,18 @@ const routes = [
     path: "/planet/:planetUrl/location-new",
     name: "location-new",
     component: NewLocation,
+    props: true,
+  },
+  {
+    path: "/faction-edit/:factionUrl",
+    name: "faction-edit",
+    component: EditFaction,
+    props: true,
+  },
+  {
+    path: "/campaign/:campaignUrl/faction-new",
+    name: "faction-new",
+    component: NewFaction,
     props: true,
   },
 ];

@@ -36,7 +36,7 @@
           <img :src="location.imageUrl" />
           <h2>{{ location.name }}</h2>
           <p>{{ location.description }}</p>
-          <p>{{ location.controllingFaction }}</p>
+          <p>controllingFaction: {{ location._controllingFactionSelfRel }}</p>
           <p>location: {{ location.latitude }} {{ location.longitude }}</p>
         </div>
       </li>
@@ -66,6 +66,7 @@ export default {
         },
       },
       locations: [],
+      factions: [],
     };
   },
   methods: {
@@ -82,6 +83,12 @@ export default {
     getCampaign(campaignUrl) {
       axios.get(campaignUrl).then((response) => {
         this.campaign = response.data;
+        this.getFactions(response.data._links.factions.href);
+      });
+    },
+    getFactions(factionUrl) {
+      axios.get(factionUrl).then((response) => {
+        this.factions = response.data._embedded.factions;
       });
     },
     getPlanet(planetUrl) {
@@ -92,11 +99,25 @@ export default {
       });
     },
     getLocations(locationsUrl) {
-      axios
-        .get(locationsUrl)
-        .then(
-          (response) => (this.locations = response.data._embedded.locations)
+      axios.get(locationsUrl).then((response) => {
+        this.locations = response.data._embedded.locations.map((location) =>
+          this.addControllingFactionSelfRel(location)
         );
+      });
+    },
+    addControllingFactionSelfRel(location) {
+      const mappedLocation = location;
+      axios
+        .get(location._links.controllingFaction.href)
+        .then((response) => {
+          mappedLocation._controllingFactionSelfRel =
+            response.data._links.self.href;
+        })
+        .catch(() => {
+          mappedLocation._controllingFactionSelfRel = null;
+          console.log("404 = no controlling faction");
+        });
+      return mappedLocation;
     },
     deleteLocation(location) {
       axios.delete(location._links.self.href).then(() => {

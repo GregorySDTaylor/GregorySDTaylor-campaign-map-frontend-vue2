@@ -14,21 +14,12 @@
       :value="description"
       @input="$emit('update:description', $event.target.value)"
     />
-    <label for="latitude">latitude</label>
+    <label for="insigniaUrl">insignia url</label>
     <input
-      type="number"
-      id="latitude"
-      step="0.0001"
-      :value="latitude"
-      @input="$emit('update:latitude', $event.target.value)"
-    />
-    <label for="longitude">longitude</label>
-    <input
-      type="number"
-      id="longitude"
-      step="0.0001"
-      :value="longitude"
-      @input="$emit('update:longitude', $event.target.value)"
+      type="url"
+      id="insigniaUrl"
+      :value="insigniaUrl"
+      @input="$emit('update:insigniaUrl', $event.target.value)"
     />
     <label for="imageUrl">image url</label>
     <input
@@ -43,13 +34,10 @@
 <script>
 export default {
   props: [
-    "planet",
-    "controllingFaction",
     "name",
     "description",
+    "insigniaUrl",
     "imageUrl",
-    "latitude",
-    "longitude",
   ],
 };
 </script>

@@ -18,6 +18,7 @@ export default {
     PlanetInput,
   },
   props: ["campaignUrl"],
+  name: "NewPlanet",
   data() {
     return {
       planet: {

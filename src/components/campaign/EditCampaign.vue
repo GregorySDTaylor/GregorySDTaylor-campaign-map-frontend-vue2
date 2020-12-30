@@ -31,7 +31,7 @@ export default {
   },
     methods: {
     updateCampaign() {
-      axios.put(this.campaignUrl, this.campaign).then(() => {
+      axios.patch(this.campaignUrl, this.campaign).then(() => {
         this.$router.push({
           name: "campaign",
           params: {

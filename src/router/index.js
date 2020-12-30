@@ -7,6 +7,8 @@ import NewCampaign from "@/components/campaign/NewCampaign.vue";
 import EditPlanet from "@/components/planet/EditPlanet.vue"
 import NewPlanet from "@/components/planet/NewPlanet.vue"
 import Planet from "@/components/planet/Planet.vue"
+import EditLocation from "@/components/location/EditLocation.vue"
+import NewLocation from "@/components/location/NewLocation.vue"
 
 Vue.use(VueRouter);
 
@@ -49,6 +51,18 @@ const routes = [
     path: "/campaign/:campaignUrl/planet-new",
     name: "planet-new",
     component: NewPlanet,
+    props: true,
+  },
+  {
+    path: "/location-edit/:locationUrl",
+    name: "location-edit",
+    component: EditLocation,
+    props: true,
+  },
+  {
+    path: "/planet/:planetUrl/location-new",
+    name: "location-new",
+    component: NewLocation,
     props: true,
   },
 ];

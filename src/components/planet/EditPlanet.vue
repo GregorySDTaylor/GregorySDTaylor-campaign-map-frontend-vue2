@@ -33,7 +33,7 @@ export default {
   },
     methods: {
     updatePlanet() {
-      axios.put(this.planetUrl, this.planet).then(() => {
+      axios.patch(this.planetUrl, this.planet).then(() => {
         this.$router.push({
           name: "planet",
           params: {

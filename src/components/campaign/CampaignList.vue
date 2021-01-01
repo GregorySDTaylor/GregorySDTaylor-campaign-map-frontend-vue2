@@ -4,18 +4,7 @@
     <router-link to="/campaign-new">new campaign...</router-link>
     <ul>
       <li v-for="campaign in campaigns" :key="campaign._links.self.href">
-        <router-link
-          :to="{
-            name: 'campaign',
-            params: { campaignUrl: campaign._links.self.href },
-          }"
-        >
-          <div>
-            <img :src="campaign.imageUrl" />
-            <h2>{{ campaign.name }}</h2>
-            <p>{{ campaign.description }}</p>
-          </div>
-        </router-link>
+        <campaign-list-item :campaign="campaign" />
       </li>
     </ul>
   </div>
@@ -23,8 +12,12 @@
 
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
+import CampaignListItem from "@/components/campaign/CampaignListItem.vue";
 export default {
   name: "CampaignList",
+  components: {
+    CampaignListItem
+  },
   data() {
     return {
       campaigns: [],

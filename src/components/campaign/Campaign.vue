@@ -24,18 +24,7 @@
       >
       <ul>
         <li v-for="planet in planets" :key="planet._links.self.href">
-          <router-link
-            :to="{
-              name: 'planet',
-              params: { planetUrl: planet._links.self.href },
-            }"
-          >
-            <div>
-              <img :src="planet.imageUrl" />
-              <h2>{{ planet.name }}</h2>
-              <p>{{ planet.description }}</p>
-            </div>
-          </router-link>
+          <planet-list-item :planet="planet" />
         </li>
       </ul>
     </div>
@@ -50,21 +39,10 @@
       >
       <ul>
         <li v-for="faction in factions" :key="faction._links.self.href">
-          <div>
-            <router-link
-              :to="{
-                name: 'faction-edit',
-                params: { factionUrl: faction._links.self.href },
-              }"
-            >
-              edit
-            </router-link>
-            <button @click="deleteFaction(faction)">delete</button>
-            <img :src="faction.insigniaUrl" />
-            <img :src="faction.imageUrl" />
-            <h2>{{ faction.name }}</h2>
-            <p>{{ faction.description }}</p>
-          </div>
+          <faction-list-item
+            :faction="faction"
+            @factionDeleted="getFactions(campaign._links.factions.href)"
+          />
         </li>
       </ul>
     </div>
@@ -73,7 +51,10 @@
 
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
+import PlanetListItem from "@/components/planet/PlanetListItem.vue";
+import FactionListItem from "@/components/faction/FactionListItem.vue";
 export default {
+  components: { PlanetListItem, FactionListItem },
   name: "Campaign",
   props: ["campaignUrl"],
   data() {
@@ -94,11 +75,6 @@ export default {
       axios
         .delete(this.campaignUrl)
         .then(() => this.$router.push({ name: "campaign-list" }));
-    },
-    deleteFaction(faction) {
-      axios
-        .delete(faction._links.self.href)
-        .then(() => this.getFactions(this.campaign._links.factions.href));
     },
     getCampaign(campaignUrl) {
       axios.get(campaignUrl).then((response) => {

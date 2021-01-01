@@ -23,22 +23,7 @@
     </router-link>
     <ul>
       <li v-for="location in locations" :key="location._links.self.href">
-        <div>
-          <router-link
-            :to="{
-              name: 'location-edit',
-              params: { locationUrl: location._links.self.href },
-            }"
-          >
-            edit
-          </router-link>
-          <button @click="deleteLocation(location)">delete</button>
-          <img :src="location.imageUrl" />
-          <h2>{{ location.name }}</h2>
-          <p>{{ location.description }}</p>
-          <p>controllingFaction: {{ location._controllingFactionSelfRel }}</p>
-          <p>location: {{ location.latitude }} {{ location.longitude }}</p>
-        </div>
+        <location-list-item :location="location" @locationDeleted="getLocations(planet._links.locations.href)"/>
       </li>
     </ul>
   </div>
@@ -46,7 +31,9 @@
 
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
+import LocationListItem from '../location/LocationListItem.vue';
 export default {
+  components: { LocationListItem },
   name: "Planet",
   props: ["planetUrl", "campaignUrl"],
   data() {
@@ -100,28 +87,7 @@ export default {
     },
     getLocations(locationsUrl) {
       axios.get(locationsUrl).then((response) => {
-        this.locations = response.data._embedded.locations.map((location) =>
-          this.addControllingFactionSelfRel(location)
-        );
-      });
-    },
-    addControllingFactionSelfRel(location) {
-      const mappedLocation = location;
-      axios
-        .get(location._links.controllingFaction.href)
-        .then((response) => {
-          mappedLocation._controllingFactionSelfRel =
-            response.data._links.self.href;
-        })
-        .catch(() => {
-          mappedLocation._controllingFactionSelfRel = null;
-          console.log("404 = no controlling faction");
-        });
-      return mappedLocation;
-    },
-    deleteLocation(location) {
-      axios.delete(location._links.self.href).then(() => {
-        this.getLocations(this.planet._links.locations.href);
+        this.locations = response.data._embedded.locations
       });
     },
   },

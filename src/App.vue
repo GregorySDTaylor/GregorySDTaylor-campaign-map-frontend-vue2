@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark> </v-app-bar>
+    <v-app-bar hide-on-scroll app dense>
+      <v-breadcrumbs :items="items" />
+    </v-app-bar>
     <v-main>
       <v-container fluid>
         <router-view />
@@ -12,5 +14,19 @@
 <script>
 export default {
   name: "App",
+  data() {
+    return {
+      items: [
+        {
+          to: "/",
+          text: "todo",
+        },
+        {
+          to: "/",
+          text: "breadcrumbs",
+        },
+      ],
+    };
+  },
 };
 </script>

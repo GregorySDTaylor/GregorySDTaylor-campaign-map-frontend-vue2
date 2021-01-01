@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <form @submit="updateCampaign">
-      <h1>Edit Campaign</h1>
+  <v-container>
+    <v-form @submit="updateCampaign">
+      <h1 class="ma-6 text-h1">Edit Campaign</h1>
       <campaign-input v-bind.sync="campaign" />
-      <img :src="campaign.imageUrl" />
-      <img :src="campaign.mapUrl" />
-      <input type="submit" value="update campaign" />
-    </form>
-  </div>
+      <v-btn class="ma-6" type="submit">update campaign</v-btn>
+    </v-form>
+  </v-container>
 </template>
 
 <script>

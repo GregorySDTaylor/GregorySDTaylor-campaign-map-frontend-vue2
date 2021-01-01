@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-row class="ma-6 justify-space-between">
-      <h1 class=".text-h1">Campaigns</h1>
+      <h1 class="text-h1">Campaigns</h1>
       <v-btn right @click="$router.push('/campaign-new')">
         <v-icon>mdi-plus</v-icon>
       </v-btn>

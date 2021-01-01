@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <form @submit="createCampaign">
-      <h1>New Campaign</h1>
+  <v-container>
+    <v-form @submit="createCampaign">
+      <h1 class="ma-6 text-h1">New Campaign</h1>
       <campaign-input v-bind.sync="campaign" />
-      <img :src="campaign.imageUrl" />
-      <img :src="campaign.mapUrl" />
-      <input type="submit" value="create new campaign" />
-    </form>
-  </div>
+      <v-btn class="ma-6" type="submit">create new campaign</v-btn>
+    </v-form>
+  </v-container>
 </template>
 
 <script>

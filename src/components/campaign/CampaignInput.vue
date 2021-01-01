@@ -1,33 +1,43 @@
 <template>
   <div>
-    <label for="name">name</label>
-    <input
+    <v-text-field
+      class="my-10"
+      label="Name"
       type="text"
       id="name"
       :value="name"
-      @input="$emit('update:name', $event.target.value)"
+      @input="$emit('update:name', $event)"
     />
-    <label for="description">description</label>
-    <input
+    <v-textarea
+    class="my-10"
+      label="description"
       type="text"
       id="description"
       :value="description"
-      @input="$emit('update:description', $event.target.value)"
+      @input="$emit('update:description', $event)"
     />
-    <label for="imageUrl">image url</label>
-    <input
+    <v-text-field
+    class="my-10"
+      persistent-hint
+      hint="valid url to an image that represents that campaign flavor"
+      label="image url"
       type="url"
       id="imageUrl"
       :value="imageUrl"
-      @input="$emit('update:imageUrl', $event.target.value)"
+      @input="$emit('update:imageUrl', $event)"
     />
-    <label for="mapUrl">map url</label>
-    <input
+    <v-img class="my-10" :src="imageUrl" />
+    <v-text-field
+    class="my-10"
+      persistent-hint
+      hint="valid url to a system map for locating planets"
+      label="map url"
       type="url"
       id="mapUrl"
       :value="mapUrl"
-      @input="$emit('update:mapUrl', $event.target.value)"
+      @input="$emit('update:mapUrl', $event)"
     />
+    <v-img class="my-10" :src="mapUrl" />
   </div>
 </template>
 

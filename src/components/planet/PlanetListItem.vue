@@ -1,7 +1,5 @@
 <template>
   <v-card
-    color="rgba(18,18,18,1)"
-    class="ma-6"
     @click="
       $router.push({
         name: 'planet',
@@ -14,9 +12,13 @@
       max-height="100"
       :src="planet.imageUrl"
     >
-      <h3 class="ma-6 text-h3">{{ planet.name }}</h3>
+      <span>
+        <h3 class="ma-6 text-h3">{{ planet.name }}</h3>
+      </span>
     </v-img>
-    <p class="ma-6">{{ truncatedDescription }}</p>
+    <v-card-text>
+      {{ truncatedDescription }}
+    </v-card-text>
   </v-card>
 </template>
 

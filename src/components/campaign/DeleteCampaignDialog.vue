@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="deleteCampaignDialog" max-width="290">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="warning" v-bind="attrs" v-on="on">
+      <v-btn class="ma-6" color="warning" v-bind="attrs" v-on="on">
         <v-icon>mdi-delete</v-icon>
       </v-btn>
     </template>

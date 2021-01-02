@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-row class="ma-6">
+    <v-row class="my-16">
       <span>
-        <h1 class="text-h1">{{ campaign.name }}</h1>
+        <h1 class="ma-6 text-h1">{{ campaign.name }}</h1>
       </span>
       <v-spacer />
       <edit-campaign-dialog
@@ -11,11 +11,14 @@
       />
       <delete-campaign-dialog :campaign="campaign"/>
     </v-row>
-    <v-row class="ma-6">
-      <v-col>
+    <v-row class="my-16">
+      <v-col cols=12 class="hidden-lg-and-up">
+        <v-img :src="campaign.imageUrl" />
+      </v-col>
+      <v-col sm=12 lg=8 xl=6>
         <p>{{ campaign.description }}</p>
       </v-col>
-      <v-col cols="4">
+      <v-col lg=4 xl=6 class="hidden-md-and-down">
         <v-img :src="campaign.imageUrl" />
       </v-col>
     </v-row>

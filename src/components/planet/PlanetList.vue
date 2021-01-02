@@ -1,40 +1,44 @@
 <template>
   <v-container>
-    <v-row>
-      <v-card>
-        <v-img
-          gradient="to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 20%,rgba(30,30,30,1) 80%, rgba(30,30,30,1) 100%"
-          max-height="400"
-          position="top"
-          :src="campaign.mapUrl"
-        >
-          <v-row class="ma-6">
-            <h2 class="ma-4 text-h2">Planets</h2>
-            <v-spacer />
-            <v-btn
-              color="primary"
-              right
-              @click="
-                $router.push({
-                  name: 'planet-new',
-                  params: { campaignUrl: campaign._links.self.href },
-                })
-              "
-            >
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
-          </v-row>
-        </v-img>
+    <v-row class="my-16">
+      <v-img
+        gradient="to left, rgba(0,0,0,0) 0%, rgba(18,18,18,1) 80%"
+        max-height="300"
+        position="top"
+        :src="campaign.mapUrl"
+      >
         <v-row>
-          <v-col
-            cols="6"
-            v-for="planet in planets"
-            :key="planet._links.self.href"
+          <span>
+            <h2 class="ma-6 text-h2">Planets</h2>
+          </span>
+          <v-spacer />
+          <v-btn
+            class="ma-6"
+            color="primary"
+            right
+            @click="
+              $router.push({
+                name: 'planet-new',
+                params: { campaignUrl: campaign._links.self.href },
+              })
+            "
           >
-            <planet-list-item :planet="planet" />
-          </v-col>
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
         </v-row>
-      </v-card>
+      </v-img>
+    </v-row>
+    <v-row class="my-16">
+      <v-col
+        v-for="planet in planets"
+        :key="planet._links.self.href"
+        sm="12"
+        md="6"
+        lg="4"
+        xl="3"
+      >
+        <planet-list-item :planet="planet" />
+      </v-col>
     </v-row>
   </v-container>
 </template>

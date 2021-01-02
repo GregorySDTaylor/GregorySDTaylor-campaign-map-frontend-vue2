@@ -5,46 +5,11 @@
         <h1 class="text-h1">{{ campaign.name }}</h1>
       </span>
       <v-spacer />
-      <v-dialog v-model="editCampaignDialog" max-width="1000px">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn class="mx-6" color="primary" v-bind="attrs" v-on="on">
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
-        </template>
-        <edit-campaign
-          :campaignUrl="campaign._links.self.href"
-          @update:campaign="getCampaign(campaignUrl)"
-          @close="editCampaignDialog = false"
-        />
-      </v-dialog>
-      <v-dialog v-model="deleteCampaignDialog" max-width="290">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="warning" v-bind="attrs" v-on="on">
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-        </template>
-        <v-card>
-          <v-card-title class="headline">
-            Are you sure you want to delete {{ campaign.name }}?
-          </v-card-title>
-          <v-card-text>there's no going back!</v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" @click="deleteCampaignDialog = false">
-              cancel
-            </v-btn>
-            <v-btn
-              color="warning"
-              @click="
-                deleteCampaignDialog = false;
-                deleteCampaign();
-              "
-            >
-              delete
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+      <edit-campaign-dialog
+        :campaign="campaign"
+        @update:campaign="getCampaign(campaignUrl)"
+      />
+      <delete-campaign-dialog :campaign="campaign"/>
     </v-row>
     <v-row class="ma-6">
       <v-col>
@@ -126,15 +91,19 @@
 import axios from "@/campaignmap-restapi-axios.js";
 import PlanetListItem from "@/components/planet/PlanetListItem.vue";
 import FactionListItem from "@/components/faction/FactionListItem.vue";
-import EditCampaign from "@/components/campaign/EditCampaign.vue";
+import EditCampaignDialog from "@/components/campaign/EditCampaignDialog.vue";
+import DeleteCampaignDialog from "@/components/campaign/DeleteCampaignDialog.vue";
 export default {
-  components: { PlanetListItem, FactionListItem, EditCampaign },
+  components: {
+    PlanetListItem,
+    FactionListItem,
+    EditCampaignDialog,
+    DeleteCampaignDialog,
+  },
   name: "Campaign",
   props: ["campaignUrl"],
   data() {
     return {
-      editCampaignDialog: false,
-      deleteCampaignDialog: false,
       campaign: {
         _links: {
           self: {
@@ -147,11 +116,6 @@ export default {
     };
   },
   methods: {
-    deleteCampaign() {
-      axios
-        .delete(this.campaignUrl)
-        .then(() => this.$router.push({ name: "campaign-list" }));
-    },
     getCampaign(campaignUrl) {
       axios.get(campaignUrl).then((response) => {
         this.campaign = response.data;

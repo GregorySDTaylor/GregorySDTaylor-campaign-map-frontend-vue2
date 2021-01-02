@@ -1,7 +1,5 @@
 <template>
   <v-card
-    max-width="400"
-    class="ma-6"
     @click="
       $router.push({
         name: 'campaign',

@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="deleteCampaignDialog" max-width="290">
+  <v-dialog v-model="deletePlanetDialog" max-width="290">
     <template v-slot:activator="{ on, attrs }">
       <v-btn class="ma-6" color="warning" v-bind="attrs" v-on="on">
         <v-icon>mdi-delete</v-icon>
@@ -7,19 +7,19 @@
     </template>
     <v-card>
       <v-card-title class="headline">
-        Are you sure you want to delete {{ campaign.name }}?
+        Are you sure you want to delete {{ planet.name }}?
       </v-card-title>
       <v-card-text>there's no going back!</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" @click="deleteCampaignDialog = false">
+        <v-btn color="primary" @click="deletePlanetDialog = false">
           cancel
         </v-btn>
         <v-btn
           color="warning"
           @click="
-            deleteCampaignDialog = false;
-            deleteCampaign();
+            deletePlanetDialog = false;
+            deletePlanet();
           "
         >
           delete
@@ -32,18 +32,25 @@
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
 export default {
-  name: "DeleteCampaignDialog",
-  props: ["campaign"],
+  name: "DeletePlanetDialog",
+  props: ["planet", "campaignUrl" ],
   data() {
     return {
-      deleteCampaignDialog: false,
+      deletePlanetDialog: false,
     };
   },
   methods: {
-    deleteCampaign() {
+    deletePlanet() {
       axios
-        .delete(this.campaign._links.self.href)
-        .then(() => this.$router.push({ name: "campaign-list" }));
+        .delete(this.planet._links.self.href)
+        .then(() => this.$router.push(
+          {
+            name: "campaign",
+            params: {
+              campaignUrl: this.campaignUrl
+            }
+          }
+          ));
     },
   },
 };

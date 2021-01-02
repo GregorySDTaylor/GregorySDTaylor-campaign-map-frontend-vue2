@@ -1,13 +1,19 @@
 <template>
-  <div>
-    <form @submit="updatePlanet">
-      <h1>Edit Planet</h1>
-      <planet-input v-bind.sync="planet" />
-      <img :src="planet.imageUrl" />
-      <img :src="planet.mapUrl" />
-      <input type="submit" value="update planet" />
-    </form>
-  </div>
+  <v-card>
+    <v-form @submit="updatePlanet">
+      <v-card-title class="ma-6 text-h1">Edit Planet</v-card-title>
+      <planet-input class="ma-6" v-bind.sync="planet" />
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn class="ma-6" color="primary" @click="$emit('close')">
+          Close
+        </v-btn>
+        <v-btn class="ma-6" type="submit" color="primary" @click="$emit('close')"
+          >Save</v-btn
+        >
+      </v-card-actions>
+    </v-form>
+  </v-card>
 </template>
 
 <script>
@@ -31,22 +37,15 @@ export default {
       },
     };
   },
-    methods: {
+  methods: {
     updatePlanet() {
       axios.patch(this.planetUrl, this.planet).then(() => {
-        this.$router.push({
-          name: "planet",
-          params: {
-            planetUrl: this.planetUrl,
-          },
-        });
+        this.$emit("update:planet");
       });
     },
   },
   mounted() {
-    axios
-      .get(this.planetUrl)
-      .then((response) => (this.planet = response.data));
+    axios.get(this.planetUrl).then((response) => (this.planet = response.data));
   },
 };
 </script>

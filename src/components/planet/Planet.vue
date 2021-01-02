@@ -1,18 +1,30 @@
 <template>
-  <div>
-    <router-link
-      :to="{
-        name: 'planet-edit',
-        params: { planetUrl: planet._links.self.href },
-      }"
-    >
-      edit
-    </router-link>
-    <button @click="deletePlanet">delete</button>
-    <img :src="planet.imageUrl" />
-    <img :src="planet.mapUrl" />
-    <h2>{{ planet.name }}</h2>
-    <p>{{ planet.description }}</p>
+  <v-container>
+    <v-row class="my-16">
+      <span>
+        <h1 class="ma-6 text-h1">{{ planet.name }}</h1>
+      </span>
+      <v-spacer />
+      <edit-planet-dialog
+        :planet="planet"
+        @update:planet="getPlanet(planetUrl)"
+      />
+      <delete-planet-dialog
+        :planet="planet"
+        :campaignUrl="campaign._links.self.href"
+      />
+    </v-row>
+    <v-row class="my-16">
+      <v-col cols="12" class="hidden-lg-and-up">
+        <v-img :src="planet.imageUrl" />
+      </v-col>
+      <v-col sm="12" lg="8" xl="6">
+        <p>{{ planet.description }}</p>
+      </v-col>
+      <v-col lg="4" xl="6" class="hidden-md-and-down">
+        <v-img :src="planet.imageUrl" />
+      </v-col>
+    </v-row>
     <router-link
       :to="{
         name: 'location-new',
@@ -23,17 +35,23 @@
     </router-link>
     <ul>
       <li v-for="location in locations" :key="location._links.self.href">
-        <location-list-item :location="location" @locationDeleted="getLocations(planet._links.locations.href)"/>
+        <location-list-item
+          :location="location"
+          @locationDeleted="getLocations(planet._links.locations.href)"
+        />
       </li>
     </ul>
-  </div>
+  </v-container>
 </template>
 
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
-import LocationListItem from '../location/LocationListItem.vue';
+import LocationListItem from "@/components/location/LocationListItem.vue";
+import DeletePlanetDialog from "@/components/planet/DeletePlanetDialog.vue";
+import EditPlanetDialog from "@/components/planet/EditPlanetDialog.vue";
+
 export default {
-  components: { LocationListItem },
+  components: { LocationListItem, DeletePlanetDialog, EditPlanetDialog },
   name: "Planet",
   props: ["planetUrl", "campaignUrl"],
   data() {
@@ -87,7 +105,7 @@ export default {
     },
     getLocations(locationsUrl) {
       axios.get(locationsUrl).then((response) => {
-        this.locations = response.data._embedded.locations
+        this.locations = response.data._embedded.locations;
       });
     },
   },

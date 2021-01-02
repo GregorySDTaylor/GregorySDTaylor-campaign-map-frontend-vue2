@@ -1,8 +1,8 @@
 <template>
   <v-card>
     <v-form @submit="createCampaign">
-      <v-card-title class="pa-6 text-h1">New Campaign</v-card-title>
-      <campaign-input class="pa-6" v-bind.sync="campaign" />
+      <v-card-title class="ma-6 text-h1">New Campaign</v-card-title>
+      <campaign-input class="ma-6" v-bind.sync="campaign" />
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn class="ma-6" color="primary" @click="$emit('close')">

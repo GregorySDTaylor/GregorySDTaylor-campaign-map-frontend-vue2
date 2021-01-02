@@ -12,19 +12,7 @@
             <h2 class="ma-6 text-h2">Planets</h2>
           </span>
           <v-spacer />
-          <v-btn
-            class="ma-6"
-            color="primary"
-            right
-            @click="
-              $router.push({
-                name: 'planet-new',
-                params: { campaignUrl: campaign._links.self.href },
-              })
-            "
-          >
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
+          <new-planet-dialog :campaignUrl="campaign._links.self.href" />
         </v-row>
       </v-img>
     </v-row>
@@ -46,9 +34,11 @@
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
 import PlanetListItem from "@/components/planet/PlanetListItem.vue";
+import NewPlanetDialog from "./NewPlanetDialog.vue";
 export default {
   components: {
     PlanetListItem,
+    NewPlanetDialog,
   },
   name: "PlanetList",
   props: ["campaign"],

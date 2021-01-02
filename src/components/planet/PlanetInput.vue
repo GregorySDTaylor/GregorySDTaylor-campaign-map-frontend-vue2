@@ -1,40 +1,51 @@
 <template>
   <div>
-    <label for="name">name</label>
-    <input
+    <v-text-field
+      class="ma-6"
+      label="Name"
       type="text"
       id="name"
       :value="name"
-      @input="$emit('update:name', $event.target.value)"
+      @input="$emit('update:name', $event)"
     />
-    <label for="description">description</label>
-    <input
+    <v-textarea
+      class="ma-6"
+      label="description"
       type="text"
       id="description"
       :value="description"
-      @input="$emit('update:description', $event.target.value)"
+      @input="$emit('update:description', $event)"
     />
-    <label for="diameterInKm">diameter (kilometers)</label>
-    <input
+    <v-text-field
+      class="ma-6"
+      label="diameter (kilometers)"
       type="number"
       id="diameterInKm"
       :value="diameterInKm"
-      @input="$emit('update:diameterInKm', $event.target.value)"
+      @input="$emit('update:diameterInKm', $event)"
     />
-    <label for="imageUrl">image url</label>
-    <input
+    <v-text-field
+      class="ma-6"
+      persistent-hint
+      hint="valid url to an image that represents that planet flavor"
+      label="image url"
       type="url"
       id="imageUrl"
       :value="imageUrl"
-      @input="$emit('update:imageUrl', $event.target.value)"
+      @input="$emit('update:imageUrl', $event)"
     />
-    <label for="mapUrl">map url</label>
-    <input
+    <v-img class="ma-6" :src="imageUrl" />
+    <v-text-field
+      class="ma-6"
+      persistent-hint
+      hint="valid url to a planet map for placing locations"
+      label="map url"
       type="url"
       id="mapUrl"
       :value="mapUrl"
-      @input="$emit('update:mapUrl', $event.target.value)"
+      @input="$emit('update:mapUrl', $event)"
     />
+    <v-img class="ma-6" :src="mapUrl" />
   </div>
 </template>
 
@@ -46,6 +57,7 @@ export default {
     "description",
     "diameterInKm",
     "imageUrl",
-    "mapUrl"]
+    "mapUrl",
+  ],
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-text-field
-      class="my-10"
+      class="ma-6"
       label="Name"
       type="text"
       id="name"
@@ -9,7 +9,7 @@
       @input="$emit('update:name', $event)"
     />
     <v-textarea
-    class="my-10"
+      class="ma-6"
       label="description"
       type="text"
       id="description"
@@ -17,7 +17,7 @@
       @input="$emit('update:description', $event)"
     />
     <v-text-field
-    class="my-10"
+      class="ma-6"
       persistent-hint
       hint="valid url to an image that represents that campaign flavor"
       label="image url"
@@ -26,9 +26,9 @@
       :value="imageUrl"
       @input="$emit('update:imageUrl', $event)"
     />
-    <v-img class="my-10" :src="imageUrl" />
+    <v-img class="ma-6" :src="imageUrl" />
     <v-text-field
-    class="my-10"
+      class="ma-6"
       persistent-hint
       hint="valid url to a system map for locating planets"
       label="map url"
@@ -37,7 +37,7 @@
       :value="mapUrl"
       @input="$emit('update:mapUrl', $event)"
     />
-    <v-img class="my-10" :src="mapUrl" />
+    <v-img class="ma-6" :src="mapUrl" />
   </div>
 </template>
 

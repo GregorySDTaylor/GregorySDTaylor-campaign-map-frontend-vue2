@@ -5,14 +5,7 @@
         <h1 class="ma-6 text-h1">Campaigns</h1>
       </span>
       <v-spacer />
-      <v-dialog v-model="newCampaignDialog" max-width="1000px">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn class="ma-6" color="primary" v-bind="attrs" v-on="on">
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-        </template>
-        <new-campaign @close="newCampaignDialog = false" />
-      </v-dialog>
+      <new-campaign-dialog/>
     </v-row>
     <v-row>
       <v-col
@@ -32,11 +25,11 @@
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
 import CampaignListItem from "@/components/campaign/CampaignListItem.vue";
-import NewCampaign from "@/components/campaign/NewCampaign.vue";
+import NewCampaignDialog from './NewCampaignDialog.vue';
 
 export default {
   name: "CampaignList",
-  components: { CampaignListItem, NewCampaign },
+  components: { CampaignListItem, NewCampaignDialog },
   data() {
     return {
       newCampaignDialog: false,

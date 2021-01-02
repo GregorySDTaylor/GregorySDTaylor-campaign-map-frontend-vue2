@@ -1,13 +1,19 @@
 <template>
-  <div>
-    <form @submit="createPlanet">
-      <h1>New Planet</h1>
-      <planet-input v-bind.sync="planet" />
-      <img :src="planet.imageUrl" />
-      <img :src="planet.mapUrl" />
-      <input type="submit" value="create new planet" />
-    </form>
-  </div>
+  <v-card>
+    <v-form @submit="createPlanet">
+      <v-card-title class="ma-6 text-h1">New Planet</v-card-title>
+      <planet-input class="ma-6" v-bind.sync="planet" />
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn class="ma-6" color="primary" @click="$emit('close')">
+          Close
+        </v-btn>
+        <v-btn class="ma-6" type="submit" color="primary"
+          >create new planet</v-btn
+        >
+      </v-card-actions>
+    </v-form>
+  </v-card>
 </template>
 
 <script>

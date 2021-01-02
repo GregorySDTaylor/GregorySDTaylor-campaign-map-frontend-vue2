@@ -23,18 +23,24 @@
           >
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn color="primary" class="ma-6" right @click="deleteFaction(faction)">
+          <v-btn
+            color="primary"
+            class="ma-6"
+            right
+            @click="deleteFaction(faction)"
+          >
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </v-col>
       </v-row>
     </v-img>
-    <p class="ma-6">{{ faction.description }}</p>
+    <p class="ma-6">{{ truncatedDescription }}</p>
   </v-card>
 </template>
 
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
+const descriptionLimit = 160;
 export default {
   name: "FactionListItem",
   props: ["faction"],
@@ -43,6 +49,15 @@ export default {
       axios
         .delete(faction._links.self.href)
         .then(() => this.$emit("factionDeleted", faction));
+    },
+  },
+  computed: {
+    truncatedDescription() {
+      if (this.faction.description.length < descriptionLimit) {
+        return this.faction.description;
+      } else {
+        return this.faction.description.slice(0, descriptionLimit) + "...";
+      }
     },
   },
 };

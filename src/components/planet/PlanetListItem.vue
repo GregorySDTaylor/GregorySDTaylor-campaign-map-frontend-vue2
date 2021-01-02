@@ -16,13 +16,23 @@
     >
       <h3 class="ma-6 text-h3">{{ planet.name }}</h3>
     </v-img>
-    <p class="ma-6">{{ planet.description }}</p>
+    <p class="ma-6">{{ truncatedDescription }}</p>
   </v-card>
 </template>
 
 <script>
+const descriptionLimit = 160;
 export default {
   name: "PlanetListItem",
   props: ["planet"],
+  computed: {
+    truncatedDescription() {
+      if (this.planet.description.length < descriptionLimit) {
+        return this.planet.description;
+      } else {
+        return this.planet.description.slice(0, descriptionLimit) + "...";
+      }
+    },
+  },
 };
 </script>

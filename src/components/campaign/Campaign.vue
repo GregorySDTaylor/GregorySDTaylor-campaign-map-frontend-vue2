@@ -1,52 +1,101 @@
 <template>
-  <div>
-    <router-link
-      :to="{
-        name: 'campaign-edit',
-        params: { campaignUrl: campaign._links.self.href },
-      }"
-    >
-      edit
-    </router-link>
-    <button @click="deleteCampaign">delete</button>
-    <img :src="campaign.imageUrl" />
-    <img :src="campaign.mapUrl" />
-    <h2>{{ campaign.name }}</h2>
-    <p>{{ campaign.description }}</p>
-    <div>
-      <h3>planets</h3>
-      <router-link
-        :to="{
-          name: 'planet-new',
-          params: { campaignUrl: campaign._links.self.href },
-        }"
-        >add planet...</router-link
+  <v-container>
+    <v-row class="ma-6">
+      <span>
+        <h1 class="text-h1">{{ campaign.name }}</h1>
+      </span>
+      <v-spacer />
+      <v-btn
+        color="primary"
+        class="mx-6"
+        right
+        @click="
+          $router.push({
+            name: 'campaign-edit',
+            params: { campaignUrl: campaign._links.self.href },
+          })
+        "
       >
-      <ul>
-        <li v-for="planet in planets" :key="planet._links.self.href">
+        <v-icon>mdi-pencil</v-icon>
+      </v-btn>
+      <v-btn color="primary" right @click="deleteCampaign">
+        <v-icon>mdi-delete</v-icon>
+      </v-btn>
+    </v-row>
+    <v-row class="ma-6">
+      <v-col>
+        <p>{{ campaign.description }}</p>
+      </v-col>
+      <v-col cols="4">
+        <v-img :src="campaign.imageUrl" />
+      </v-col>
+    </v-row>
+    <v-card>
+      <v-img
+        gradient="to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 20%,rgba(30,30,30,1) 80%, rgba(30,30,30,1) 100%"
+        max-height="400"
+        position="top"
+        :src="campaign.mapUrl"
+      >
+        <v-row class="ma-6">
+          <h2 class="ma-4 text-h2">Planets</h2>
+          <v-spacer />
+          <v-btn
+            color="primary"
+            right
+            @click="
+              $router.push({
+                name: 'planet-new',
+                params: { campaignUrl: campaign._links.self.href },
+              })
+            "
+          >
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </v-row>
+      </v-img>
+      <v-row>
+        <v-col
+          cols="6"
+          v-for="planet in planets"
+          :key="planet._links.self.href"
+        >
           <planet-list-item :planet="planet" />
-        </li>
-      </ul>
-    </div>
-    <div>
-      <h3>factions</h3>
-      <router-link
-        :to="{
-          name: 'faction-new',
-          params: { campaignUrl: campaign._links.self.href },
-        }"
-        >add faction...</router-link
-      >
-      <ul>
-        <li v-for="faction in factions" :key="faction._links.self.href">
+        </v-col>
+      </v-row>
+    </v-card>
+    <v-card>
+      <v-row class="ma-6">
+        <h2 class="ma-4 text-h2">Factions</h2>
+        <v-spacer />
+        <v-btn
+          class="ma-6"
+          color="primary"
+          right
+          @click="
+            $router.push({
+              name: 'faction-new',
+              params: { campaignUrl: campaign._links.self.href },
+            })
+          "
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </v-row>
+      <v-row>
+        <v-col
+          v-for="faction in factions"
+          :key="faction._links.self.href"
+          cols="6"
+        >
           <faction-list-item
             :faction="faction"
             @factionDeleted="getFactions(campaign._links.factions.href)"
           />
-        </li>
-      </ul>
-    </div>
-  </div>
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-container>
 </template>
 
 <script>

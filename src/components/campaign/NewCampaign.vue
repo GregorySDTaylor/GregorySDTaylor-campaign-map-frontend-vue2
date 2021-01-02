@@ -1,11 +1,22 @@
 <template>
-  <v-container>
+  <v-card>
     <v-form @submit="createCampaign">
-      <h1 class="ma-6 text-h1">New Campaign</h1>
-      <campaign-input v-bind.sync="campaign" />
-      <v-btn class="ma-6" type="submit">create new campaign</v-btn>
+      <v-card-title class="pa-6 text-h1">New Campaign</v-card-title>
+      <campaign-input class="pa-6" v-bind.sync="campaign" />
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn class="ma-6" color="primary" @click="$emit('close')">
+          Close
+        </v-btn>
+        <v-btn
+          class="ma-6"
+          type="submit"
+          color="primary"
+          >create new campaign</v-btn
+        >
+      </v-card-actions>
     </v-form>
-  </v-container>
+  </v-card>
 </template>
 
 <script>

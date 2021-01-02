@@ -2,9 +2,15 @@
   <v-container>
     <v-row class="ma-6 justify-space-between">
       <h1 class="text-h1">Campaigns</h1>
-      <v-btn color="primary" right @click="$router.push('/campaign-new')">
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+      <v-spacer />
+      <v-dialog v-model="newCampaignDialog" max-width="1000px">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="mx-6" color="primary" v-bind="attrs" v-on="on">
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </template>
+        <new-campaign @close="newCampaignDialog = false" />
+      </v-dialog>
     </v-row>
     <v-row justify="center">
       <campaign-list-item
@@ -19,13 +25,14 @@
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
 import CampaignListItem from "@/components/campaign/CampaignListItem.vue";
+import NewCampaign from "@/components/campaign/NewCampaign.vue";
+
 export default {
   name: "CampaignList",
-  components: {
-    CampaignListItem,
-  },
+  components: { CampaignListItem, NewCampaign },
   data() {
     return {
+      newCampaignDialog: false,
       campaigns: [],
     };
   },

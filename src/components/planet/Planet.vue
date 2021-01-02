@@ -25,33 +25,18 @@
         <v-img :src="planet.imageUrl" />
       </v-col>
     </v-row>
-    <router-link
-      :to="{
-        name: 'location-new',
-        params: { planetUrl: planet._links.self.href },
-      }"
-    >
-      add location
-    </router-link>
-    <ul>
-      <li v-for="location in locations" :key="location._links.self.href">
-        <location-list-item
-          :location="location"
-          @locationDeleted="getLocations(planet._links.locations.href)"
-        />
-      </li>
-    </ul>
+    <location-list :planet="planet" />
   </v-container>
 </template>
 
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
-import LocationListItem from "@/components/location/LocationListItem.vue";
+import LocationList from "@/components/location/LocationList.vue";
 import DeletePlanetDialog from "@/components/planet/DeletePlanetDialog.vue";
 import EditPlanetDialog from "@/components/planet/EditPlanetDialog.vue";
 
 export default {
-  components: { LocationListItem, DeletePlanetDialog, EditPlanetDialog },
+  components: { DeletePlanetDialog, LocationList, EditPlanetDialog },
   name: "Planet",
   props: ["planetUrl", "campaignUrl"],
   data() {

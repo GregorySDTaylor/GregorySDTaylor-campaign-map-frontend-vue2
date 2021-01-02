@@ -28,7 +28,6 @@
       >
         <faction-list-item
           :faction="faction"
-          @factionDeleted="getFactions(campaign._links.factions.href)"
         />
       </v-col>
     </v-row>

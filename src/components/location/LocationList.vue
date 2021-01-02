@@ -1,21 +1,32 @@
 <template>
   <v-container>
     <v-row class="my-16">
-      <h2 class="ma-6 text-h2">Locations</h2>
-      <v-spacer />
-      <v-btn
-        class="ma-6"
-        color="primary"
-        right
-        @click="
-          $router.push({
-            name: 'location-new',
-            params: { planetUrl: planet._links.self.href },
-          })
-        "
+      <v-img
+        gradient="to left, rgba(0,0,0,0) 0%, rgba(18,18,18,1) 80%"
+        max-height="300"
+        position="top"
+        :src="planet.mapUrl"
       >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+        <v-row>
+          <span>
+            <h2 class="ma-6 text-h2">Locations</h2>
+          </span>
+          <v-spacer />
+          <v-btn
+            class="ma-6"
+            color="primary"
+            right
+            @click="
+              $router.push({
+                name: 'location-new',
+                params: { planetUrl: planet._links.self.href },
+              })
+            "
+          >
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </v-row>
+      </v-img>
     </v-row>
     <v-row>
       <v-col

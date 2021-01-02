@@ -1,34 +1,25 @@
 <template>
-  <div>
-    <router-link
-      :to="{
-        name: 'location-edit',
-        params: { locationUrl: location._links.self.href },
-      }"
+  <v-card>
+    <v-img
+      gradient="to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 20%,rgba(30,30,30,1) 80%, rgba(30,30,30,1) 100%"
+      max-height="100"
+      :src="location.imageUrl"
     >
-      edit
-    </router-link>
-    <button @click="deleteLocation(location)">delete</button>
-    <img :src="location.imageUrl" />
-    <h2>{{ location.name }}</h2>
-    <p>{{ truncatedDescription }}</p>
-    <p>location: {{ location.latitude }} {{ location.longitude }}</p>
-  </div>
+      <span>
+        <h3 class="ma-6 text-h3">{{ location.name }}</h3>
+      </span>
+    </v-img>
+    <v-card-text>
+      {{ truncatedDescription }}
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
-import axios from "@/campaignmap-restapi-axios.js";
 const descriptionLimit = 160;
 export default {
   name: "LocationListItem",
   props: ["location"],
-  methods: {
-    deleteLocation(location) {
-      axios.delete(location._links.self.href).then(() => {
-        this.$emit("locationDeleted", location);
-      });
-    },
-  },
   computed: {
     truncatedDescription() {
       if (this.location.description.length < descriptionLimit) {

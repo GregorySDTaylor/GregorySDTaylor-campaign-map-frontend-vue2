@@ -7,6 +7,7 @@ import NewPlanet from "@/components/planet/NewPlanet.vue"
 import Planet from "@/components/planet/Planet.vue"
 import EditLocation from "@/components/location/EditLocation.vue"
 import NewLocation from "@/components/location/NewLocation.vue"
+import Location from "@/components/location/Location.vue"
 import EditFaction from "@/components/faction/EditFaction.vue"
 import NewFaction from "@/components/faction/NewFaction.vue"
 
@@ -64,6 +65,12 @@ const routes = [
     path: "/campaign/:campaignUrl/faction-new",
     name: "faction-new",
     component: NewFaction,
+    props: true,
+  },
+  {
+    path: "/location/:locationUrl",
+    name: "location",
+    component: Location,
     props: true,
   },
 ];

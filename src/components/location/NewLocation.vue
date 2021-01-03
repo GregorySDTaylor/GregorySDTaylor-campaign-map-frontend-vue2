@@ -1,12 +1,22 @@
 <template>
-  <div>
-    <form @submit="createLocation">
-      <h1>New Location</h1>
-      <location-input v-bind.sync="location" />
-      <img :src="location.imageUrl" />
-      <input type="submit" value="create new location" />
-    </form>
-  </div>
+  <v-card>
+    <v-form @submit="createLocation">
+      <v-card-title class="ma-6 text-h1">New Location</v-card-title>
+      <location-input
+        class="ma-6"
+        v-bind.sync="location"
+      />
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn class="ma-6" color="primary" @click="$emit('close')">
+          Close
+        </v-btn>
+        <v-btn class="ma-6" type="submit" color="primary"
+          >create new location</v-btn
+        >
+      </v-card-actions>
+    </v-form>
+  </v-card>
 </template>
 
 <script>
@@ -33,11 +43,12 @@ export default {
   },
   methods: {
     createLocation() {
-      axios.post("/locations", this.location).then(() => {
+      axios.post("/locations", this.location).then((response) => {
         this.$router.push({
-          name: "planet",
+          name: "location",
           params: {
             planetUrl: this.planetUrl,
+            locationUrl: response.data._links.self.href,
           },
         });
       });

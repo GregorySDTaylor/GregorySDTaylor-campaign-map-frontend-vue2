@@ -12,19 +12,7 @@
             <h2 class="ma-6 text-h2">Locations</h2>
           </span>
           <v-spacer />
-          <v-btn
-            class="ma-6"
-            color="primary"
-            right
-            @click="
-              $router.push({
-                name: 'location-new',
-                params: { planetUrl: planet._links.self.href },
-              })
-            "
-          >
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
+          <new-location-dialog :planetUrl="planet._links.self.href" />
         </v-row>
       </v-img>
     </v-row>
@@ -46,10 +34,12 @@
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
 import LocationListItem from "@/components/location/LocationListItem.vue";
+import NewLocationDialog from './NewLocationDialog.vue';
 
 export default {
   components: {
     LocationListItem,
+    NewLocationDialog,
   },
   name: "LocationList",
   props: ["planet"],

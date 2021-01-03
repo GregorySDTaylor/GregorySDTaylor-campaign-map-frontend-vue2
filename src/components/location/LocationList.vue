@@ -25,7 +25,11 @@
         lg="4"
         xl="3"
       >
-        <location-list-item :location="location" />
+        <location-list-item
+          :campaignUrl="campaignUrl"
+          :planetUrl="planet._links.self.href"
+          :location="location"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -34,7 +38,7 @@
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
 import LocationListItem from "@/components/location/LocationListItem.vue";
-import NewLocationDialog from './NewLocationDialog.vue';
+import NewLocationDialog from "./NewLocationDialog.vue";
 
 export default {
   components: {
@@ -42,7 +46,7 @@ export default {
     NewLocationDialog,
   },
   name: "LocationList",
-  props: ["planet"],
+  props: ["campaignUrl", "planet"],
   data() {
     return {
       locations: [],

@@ -3,7 +3,11 @@
     @click="
       $router.push({
         name: 'location',
-        params: { locationUrl: location._links.self.href },
+        params: {
+          campaignUrl: campaignUrl,
+          planetUrl: planetUrl,
+          locationUrl: location._links.self.href,
+        },
       })
     "
   >
@@ -26,7 +30,7 @@
 const descriptionLimit = 160;
 export default {
   name: "LocationListItem",
-  props: ["location"],
+  props: ["campaignUrl", "planetUrl", "location"],
   computed: {
     truncatedDescription() {
       if (this.location.description.length < descriptionLimit) {

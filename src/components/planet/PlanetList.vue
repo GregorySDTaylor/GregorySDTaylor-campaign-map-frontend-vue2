@@ -25,7 +25,7 @@
         lg="4"
         xl="3"
       >
-        <planet-list-item :planet="planet" />
+        <planet-list-item :campaign="campaign" :planet="planet" />
       </v-col>
     </v-row>
   </v-container>

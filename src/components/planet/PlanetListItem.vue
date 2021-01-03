@@ -3,7 +3,10 @@
     @click="
       $router.push({
         name: 'planet',
-        params: { planetUrl: planet._links.self.href },
+        params: {
+          campaignUrl: campaign._links.self.href,
+          planetUrl: planet._links.self.href,
+        },
       })
     "
   >
@@ -26,7 +29,7 @@
 const descriptionLimit = 160;
 export default {
   name: "PlanetListItem",
-  props: ["planet"],
+  props: ["campaign", "planet"],
   computed: {
     truncatedDescription() {
       if (this.planet.description.length < descriptionLimit) {

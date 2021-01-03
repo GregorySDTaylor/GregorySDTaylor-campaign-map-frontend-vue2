@@ -26,7 +26,7 @@ export default {
   components: {
     LocationInput,
   },
-  props: ["planetUrl"],
+  props: ["campaignUrl", "planetUrl"],
   name: "NewLocation",
   data() {
     return {
@@ -47,6 +47,7 @@ export default {
         this.$router.push({
           name: "location",
           params: {
+            campaignUrl: this.campaignUrl,
             planetUrl: this.planetUrl,
             locationUrl: response.data._links.self.href,
           },

@@ -41,7 +41,7 @@ export default {
   components: {
     LocationInput,
   },
-  props: ["locationUrl"],
+  props: ["campaignUrl", "planetUrl", "locationUrl"],
   data() {
     return {
       planet: null,
@@ -69,7 +69,8 @@ export default {
         this.$router.push({
           name: "planet",
           params: {
-            planetUrl: this.planet._links.self.href,
+            campaignUrl: this.campaignUrl,
+            planetUrl: this.planetUrl,
           },
         });
       });
@@ -86,7 +87,8 @@ export default {
         this.$router.push({
           name: "planet",
           params: {
-            planetUrl: this.planet._links.self.href,
+            campaignUrl: this.campaignUrl,
+            planetUrl: this.planetUrl,
           },
         });
       });
@@ -106,7 +108,8 @@ export default {
           this.$router.push({
             name: "planet",
             params: {
-              planetUrl: this.planet._links.self.href,
+              campaignUrl: this.campaignUrl,
+              planetUrl: this.planetUrl,
             },
           });
         });

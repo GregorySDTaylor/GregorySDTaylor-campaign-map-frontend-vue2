@@ -25,7 +25,7 @@
         <v-img :src="planet.imageUrl" />
       </v-col>
     </v-row>
-    <location-list :planet="planet" />
+    <location-list :planet="planet" :campaignUrl="campaignUrl" />
   </v-container>
 </template>
 
@@ -65,7 +65,7 @@ export default {
         this.$router.push({
           name: "campaign",
           params: {
-            campaignUrl: this.campaign._links.self.href,
+            campaignUrl: this.campaignUrl,
           },
         })
       );

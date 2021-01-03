@@ -43,6 +43,7 @@ export default {
         this.$router.push({
           name: "planet",
           params: {
+            campaignUrl: this.campaignUrl,
             planetUrl: response.data._links.self.href,
           },
         });

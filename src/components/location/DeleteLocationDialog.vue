@@ -33,7 +33,7 @@
 import axios from "@/campaignmap-restapi-axios.js";
 export default {
   name: "DeleteLocationDialog",
-  props: ["location", "planetUrl" ],
+  props: ["campaignUrl", "planetUrl", "location" ],
   data() {
     return {
       deleteLocationDialog: false,
@@ -47,6 +47,7 @@ export default {
           {
             name: "planet",
             params: {
+              campaignUrl: this.campaignUrl,
               planetUrl: this.planetUrl
             }
           }

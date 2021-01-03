@@ -33,7 +33,7 @@
 import axios from "@/campaignmap-restapi-axios.js";
 export default {
   name: "DeletePlanetDialog",
-  props: ["planet", "campaignUrl" ],
+  props: ["campaignUrl", "planet"],
   data() {
     return {
       deletePlanetDialog: false,

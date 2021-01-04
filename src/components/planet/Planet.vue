@@ -25,7 +25,7 @@
         <v-img :src="planet.imageUrl" />
       </v-col>
     </v-row>
-    <location-list :planet="planet" :campaignUrl="campaignUrl" />
+    <location-list :planet="planet" :campaign="campaign" :campaignFactions="factions" />
   </v-container>
 </template>
 
@@ -85,7 +85,6 @@ export default {
       axios.get(planetUrl).then((response) => {
         this.planet = response.data;
         this.getLocations(response.data._links.locations.href);
-        this.getCampaign(response.data._links.campaign.href);
       });
     },
     getLocations(locationsUrl) {
@@ -96,6 +95,7 @@ export default {
   },
   mounted() {
     this.getPlanet(this.planetUrl);
+    this.getCampaign(this.campaignUrl);
   },
 };
 </script>

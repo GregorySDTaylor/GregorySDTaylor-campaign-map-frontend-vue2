@@ -26,9 +26,10 @@
         xl="3"
       >
         <location-list-item
-          :campaignUrl="campaignUrl"
-          :planetUrl="planet._links.self.href"
+          :campaign="campaign"
+          :planet="planet"
           :location="location"
+          :campaignFactions="campaignFactions"
         />
       </v-col>
     </v-row>
@@ -46,7 +47,7 @@ export default {
     NewLocationDialog,
   },
   name: "LocationList",
-  props: ["campaignUrl", "planet"],
+  props: ["campaign", "planet", "campaignFactions"],
   data() {
     return {
       locations: [],

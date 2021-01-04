@@ -1,82 +1,65 @@
 <template>
   <v-card>
-    <div>
-      <label for="controllingFaction">controlling faction</label>
-      <select
-        type="url"
-        id="controllingFaction"
-        v-model="controllingFaction._links.self.href"
-      >
-        <option value="">none</option>
-        <option
-          v-for="faction in factions"
-          :key="faction._links.self.href"
-          :value="faction._links.self.href"
-        >
-          {{ faction.name }}
-        </option>
-      </select>
-      <button @click="updateOrDeleteControllingFaction">
-        update controlling faction
-      </button>
-    </div>
-    <form @submit="updateLocation">
-      <h1>Edit Location</h1>
-      <location-input
-        v-bind.sync="location"
-        :controllingFaction.sync="controllingFaction"
-        :campaignFactions="factions"
+    <v-form @submit="updateOrDeleteControllingFaction">
+      <v-card-title class="pa-6 text-h2">{{location.name}} Controlling Faction</v-card-title>
+      <v-select
+        v-model="selectedFaction"
+        class="ma-6"
+        :items="factionOptionsWithNull"
+        item-text="name"
+        item-value="_links.self.href"
       />
-      <img :src="location.imageUrl" />
-      <input type="submit" value="update location" />
-    </form>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn class="ma-6" color="primary" @click="$emit('close')">
+          Close
+        </v-btn>
+        <v-btn
+          class="ma-6"
+          type="submit"
+          color="primary"
+          @click="$emit('close')"
+        >
+          update controlling faction
+        </v-btn>
+      </v-card-actions>
+    </v-form>
   </v-card>
 </template>
 
 <script>
-import LocationInput from "@/components/location/LocationInput.vue";
 import axios from "@/campaignmap-restapi-axios.js";
+
+const nullOptionText = "none";
+
 export default {
-  name: "EditLocation",
-  components: {
-    LocationInput,
-  },
-  props: ["campaignUrl", "planetUrl", "locationUrl"],
+  name: "EditControllingFaction",
+  components: {},
+  props: ["location", "controllingFaction", "campaignFactions"],
   data() {
     return {
-      planet: null,
-      campaign: null,
-      factions: [],
-      location: {
-        name: null,
-        description: null,
-        imageUrl: null,
-        latitude: null,
-        longitude: null,
-      },
-      controllingFaction: {
-        _links: {
-          self: {
-            href: "",
-          },
-        },
-      },
+      selectedFaction: this.controllingFaction._links.self.href,
     };
   },
-  methods: {
-    updateLocation() {
-      axios.patch(this.locationUrl, this.location).then(() => {
-        this.$router.push({
-          name: "planet",
-          params: {
-            campaignUrl: this.campaignUrl,
-            planetUrl: this.planetUrl,
+  computed: {
+    factionOptionsWithNull() {
+      const nullOption = [
+        {
+          _links: {
+            self: {
+              href: null,
+            },
           },
-        });
-      });
+          name: nullOptionText,
+        },
+      ];
+      const factionOptionsWithNull = nullOption.concat(this.campaignFactions);
+      return factionOptionsWithNull;
     },
+  },
+  methods: {
     updateOrDeleteControllingFaction() {
-      if (this.controllingFaction._links.self.href == "") {
+      if (this.selectedFaction == null) {
         this.deleteControllingFaction();
       } else {
         this.updateControllingFaction();
@@ -84,20 +67,14 @@ export default {
     },
     deleteControllingFaction() {
       axios.delete(this.location._links.controllingFaction.href).then(() => {
-        this.$router.push({
-          name: "planet",
-          params: {
-            campaignUrl: this.campaignUrl,
-            planetUrl: this.planetUrl,
-          },
-        });
+        this.$emit("update:controllingFaction");
       });
     },
     updateControllingFaction() {
       axios
         .put(
           this.location._links.controllingFaction.href,
-          this.controllingFaction._links.self.href,
+          this.selectedFaction,
           {
             headers: {
               "Content-Type": "text/uri-list",
@@ -105,47 +82,9 @@ export default {
           }
         )
         .then(() => {
-          this.$router.push({
-            name: "planet",
-            params: {
-              campaignUrl: this.campaignUrl,
-              planetUrl: this.planetUrl,
-            },
-          });
+          this.$emit("update:controllingFaction");
         });
     },
-    getPlanet(planetUrl) {
-      axios.get(planetUrl).then((response) => {
-        this.planet = response.data;
-        this.getCampaign(response.data._links.campaign.href);
-      });
-    },
-    getControllingFaction(controllingFactionUrl) {
-      axios
-        .get(controllingFactionUrl)
-        .then((response) => {
-          this.controllingFaction = response.data;
-        })
-        .catch(() => console.log("404 = no controlling faction"));
-    },
-    getCampaign(campaignUrl) {
-      axios.get(campaignUrl).then((response) => {
-        this.campaign = response.data;
-        this.getFactions(response.data._links.factions.href);
-      });
-    },
-    getFactions(factionsUrl) {
-      axios.get(factionsUrl).then((response) => {
-        this.factions = response.data._embedded.factions;
-      });
-    },
-  },
-  mounted() {
-    axios.get(this.locationUrl).then((response) => {
-      this.location = response.data;
-      this.getPlanet(response.data._links.planet.href);
-      this.getControllingFaction(response.data._links.controllingFaction.href);
-    });
   },
 };
 </script>

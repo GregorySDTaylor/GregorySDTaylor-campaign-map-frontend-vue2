@@ -6,7 +6,11 @@
       </span>
       <edit-controlling-faction-dialog
         :location="location"
-        @update:controllingFaction="getLocation(locationUrl)"
+        :controllingFaction="controllingFaction"
+        :campaignFactions="campaignFactions"
+        @update:controllingFaction="
+          getControllingFaction(location._links.controllingFaction.href)
+        "
       />
       <v-spacer />
       <edit-location-dialog
@@ -50,19 +54,69 @@ export default {
           self: {
             href: this.locationUrl,
           },
+          controllingFaction: {
+            href: null,
+          },
         },
       },
+      controllingFaction: {
+        _links: {
+          self: {
+            href: null,
+          },
+        },
+      },
+      campaign: {
+        _links: {
+          self: {
+            href: this.campaignUrl,
+          },
+        },
+      },
+      campaignFactions: [],
     };
   },
   methods: {
     getLocation(locationUrl) {
       axios.get(locationUrl).then((response) => {
         this.location = response.data;
+        this.getControllingFaction(
+          response.data._links.controllingFaction.href
+        );
+      });
+    },
+    getControllingFaction(controllingFactionUrl) {
+      axios
+        .get(controllingFactionUrl)
+        .then((response) => {
+          this.controllingFaction = response.data;
+        })
+        .catch(() => {
+          console.log("404 = no controlling faction");
+          this.controllingFaction = {
+            _links: {
+              self: {
+                href: null,
+              },
+            },
+          };
+        });
+    },
+    getCampaign(campaignUrl) {
+      axios.get(campaignUrl).then((response) => {
+        this.campaign = response.data;
+        this.getCampaignFactions(response.data._links.factions.href);
+      });
+    },
+    getCampaignFactions(locationUrl) {
+      axios.get(locationUrl).then((response) => {
+        this.campaignFactions = response.data._embedded.factions;
       });
     },
   },
   mounted() {
     this.getLocation(this.locationUrl);
+    this.getCampaign(this.campaignUrl);
   },
 };
 </script>

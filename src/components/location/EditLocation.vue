@@ -1,35 +1,22 @@
 <template>
   <v-card>
-    <div>
-      <label for="controllingFaction">controlling faction</label>
-      <select
-        type="url"
-        id="controllingFaction"
-        v-model="controllingFaction._links.self.href"
-      >
-        <option value="">none</option>
-        <option
-          v-for="faction in factions"
-          :key="faction._links.self.href"
-          :value="faction._links.self.href"
+    <v-form @submit="updateLocation">
+      <v-card-title class="ma-6 text-h1">Edit Location</v-card-title>
+      <location-input v-bind.sync="location" class="ma-6" />
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn class="ma-6" color="primary" @click="$emit('close')">
+          Close
+        </v-btn>
+        <v-btn
+          class="ma-6"
+          type="submit"
+          color="primary"
+          @click="$emit('close')"
+          >update location</v-btn
         >
-          {{ faction.name }}
-        </option>
-      </select>
-      <button @click="updateOrDeleteControllingFaction">
-        update controlling faction
-      </button>
-    </div>
-    <form @submit="updateLocation">
-      <h1>Edit Location</h1>
-      <location-input
-        v-bind.sync="location"
-        :controllingFaction.sync="controllingFaction"
-        :campaignFactions="factions"
-      />
-      <img :src="location.imageUrl" />
-      <input type="submit" value="update location" />
-    </form>
+      </v-card-actions>
+    </v-form>
   </v-card>
 </template>
 
@@ -66,85 +53,13 @@ export default {
   methods: {
     updateLocation() {
       axios.patch(this.locationUrl, this.location).then(() => {
-        this.$router.push({
-          name: "planet",
-          params: {
-            campaignUrl: this.campaignUrl,
-            planetUrl: this.planetUrl,
-          },
-        });
-      });
-    },
-    updateOrDeleteControllingFaction() {
-      if (this.controllingFaction._links.self.href == "") {
-        this.deleteControllingFaction();
-      } else {
-        this.updateControllingFaction();
-      }
-    },
-    deleteControllingFaction() {
-      axios.delete(this.location._links.controllingFaction.href).then(() => {
-        this.$router.push({
-          name: "planet",
-          params: {
-            campaignUrl: this.campaignUrl,
-            planetUrl: this.planetUrl,
-          },
-        });
-      });
-    },
-    updateControllingFaction() {
-      axios
-        .put(
-          this.location._links.controllingFaction.href,
-          this.controllingFaction._links.self.href,
-          {
-            headers: {
-              "Content-Type": "text/uri-list",
-            },
-          }
-        )
-        .then(() => {
-          this.$router.push({
-            name: "planet",
-            params: {
-              campaignUrl: this.campaignUrl,
-              planetUrl: this.planetUrl,
-            },
-          });
-        });
-    },
-    getPlanet(planetUrl) {
-      axios.get(planetUrl).then((response) => {
-        this.planet = response.data;
-        this.getCampaign(response.data._links.campaign.href);
-      });
-    },
-    getControllingFaction(controllingFactionUrl) {
-      axios
-        .get(controllingFactionUrl)
-        .then((response) => {
-          this.controllingFaction = response.data;
-        })
-        .catch(() => console.log("404 = no controlling faction"));
-    },
-    getCampaign(campaignUrl) {
-      axios.get(campaignUrl).then((response) => {
-        this.campaign = response.data;
-        this.getFactions(response.data._links.factions.href);
-      });
-    },
-    getFactions(factionsUrl) {
-      axios.get(factionsUrl).then((response) => {
-        this.factions = response.data._embedded.factions;
+        this.$emit("update:location");
       });
     },
   },
   mounted() {
     axios.get(this.locationUrl).then((response) => {
       this.location = response.data;
-      this.getPlanet(response.data._links.planet.href);
-      this.getControllingFaction(response.data._links.controllingFaction.href);
     });
   },
 };

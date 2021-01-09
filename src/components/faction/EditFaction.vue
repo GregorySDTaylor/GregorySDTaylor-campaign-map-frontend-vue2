@@ -1,13 +1,23 @@
 <template>
-  <div>
-    <form @submit="updateFaction">
-      <h1>Edit Faction</h1>
-      <faction-input v-bind.sync="faction" />
-      <img :src="faction.insigniaUrl" />
-      <img :src="faction.imageUrl" />
-      <input type="submit" value="update faction" />
-    </form>
-  </div>
+  <v-card>
+    <v-form @submit="updateFaction">
+      <v-card-title class="ma-6 text-h1">Edit Faction</v-card-title>
+      <faction-input class="ma-6" v-bind.sync="faction" />
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn class="ma-6" color="primary" @click="$emit('close')">
+          Close
+        </v-btn>
+        <v-btn
+          class="ma-6"
+          type="submit"
+          color="primary"
+          @click="$emit('close')"
+          >update faction</v-btn
+        >
+      </v-card-actions>
+    </v-form>
+  </v-card>
 </template>
 
 <script>
@@ -34,16 +44,13 @@ export default {
   methods: {
     updateFaction() {
       axios.patch(this.factionUrl, this.faction).then(() => {
-        this.$router.push({
-          name: "campaign",
-          params: {
-            campaignUrl: this.campaign._links.self.href,
-          },
-        });
+        this.$emit("update:faction");
       });
     },
     getCampaign(campaignUrl) {
-      axios.get(campaignUrl).then((response) => (this.campaign = response.data));
+      axios
+        .get(campaignUrl)
+        .then((response) => (this.campaign = response.data));
     },
   },
   mounted() {

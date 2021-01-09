@@ -11,7 +11,6 @@
       @close="editCampaignDialog = false"
     />
   </v-dialog>
-  <!-- @update:campaign="getCampaign(campaignUrl)" -->
 </template>
 <script>
 import EditCampaign from "@/components/campaign/EditCampaign.vue";

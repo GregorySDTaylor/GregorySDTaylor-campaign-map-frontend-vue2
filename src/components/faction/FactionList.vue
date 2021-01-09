@@ -3,19 +3,7 @@
     <v-row class="my-16">
       <h2 class="ma-6 text-h2">Factions</h2>
       <v-spacer />
-      <v-btn
-        class="ma-6"
-        color="primary"
-        right
-        @click="
-          $router.push({
-            name: 'faction-new',
-            params: { campaignUrl: campaign._links.self.href },
-          })
-        "
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+      <new-faction-dialog :campaignUrl="campaign._links.self.href" />
     </v-row>
     <v-row>
       <v-col
@@ -26,9 +14,7 @@
         lg="4"
         xl="3"
       >
-        <faction-list-item
-          :faction="faction"
-        />
+        <faction-list-item :faction="faction" :campaign="campaign" />
       </v-col>
     </v-row>
   </v-container>
@@ -37,9 +23,12 @@
 <script>
 import axios from "@/campaignmap-restapi-axios.js";
 import FactionListItem from "@/components/faction/FactionListItem.vue";
+import NewFactionDialog from '@/components/faction/NewFactionDialog.vue';
+
 export default {
   components: {
     FactionListItem,
+    NewFactionDialog,
   },
   name: "FactionList",
   props: ["campaign"],

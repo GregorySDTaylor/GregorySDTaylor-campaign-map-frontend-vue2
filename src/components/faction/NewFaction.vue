@@ -1,13 +1,22 @@
 <template>
-  <div>
-    <form @submit="createFaction">
-      <h1>New Faction</h1>
-      <faction-input v-bind.sync="faction" />
-      <img :src="faction.insigniaUrl" />
-      <img :src="faction.imageUrl" />
-      <input type="submit" value="create new faction" />
-    </form>
-  </div>
+  <v-card>
+    <v-form @submit="createFaction">
+      <v-card-title class="ma-6 text-h1">New Faction</v-card-title>
+      <faction-input class="ma-6" v-bind.sync="faction" />
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn class="ma-6" color="primary" @click="$emit('close')">
+          Close
+        </v-btn>
+        <v-btn
+          class="ma-6"
+          type="submit"
+          color="primary"
+          >create new faction</v-btn
+        >
+      </v-card-actions>
+    </v-form>
+  </v-card>
 </template>
 
 <script>
@@ -32,11 +41,12 @@ export default {
   },
   methods: {
     createFaction() {
-      axios.post("/factions", this.faction).then(() => {
+      axios.post("/factions", this.faction).then((response) => {
         this.$router.push({
-          name: "campaign",
+          name: "faction",
           params: {
             campaignUrl: this.campaignUrl,
+            factionUrl: response.data._links.self.href,
           },
         });
       });

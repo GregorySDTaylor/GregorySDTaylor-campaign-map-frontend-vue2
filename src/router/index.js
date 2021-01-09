@@ -4,7 +4,6 @@ import CampaignList from "@/components/campaign/CampaignList.vue";
 import Campaign from "@/components/campaign/Campaign.vue";
 import Planet from "@/components/planet/Planet.vue";
 import Location from "@/components/location/Location.vue";
-import EditFaction from "@/components/faction/EditFaction.vue";
 import Faction from "@/components/faction/Faction.vue";
 import NewFaction from "@/components/faction/NewFaction.vue";
 
@@ -38,12 +37,6 @@ const routes = [
     path: "/campaign/:campaignUrl/planet/:planetUrl/location/:locationUrl",
     name: "location",
     component: Location,
-    props: true,
-  },
-  {
-    path: "/faction-edit/:factionUrl",
-    name: "faction-edit",
-    component: EditFaction,
     props: true,
   },
   {

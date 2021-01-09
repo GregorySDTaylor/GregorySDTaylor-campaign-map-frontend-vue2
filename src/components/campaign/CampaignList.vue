@@ -2,7 +2,7 @@
   <v-container color="secondary">
     <v-row class="my-16">
       <span>
-        <h1 class="ma-6 text-h1">Campaigns</h1>
+        <h1 class="text-h1">Campaigns</h1>
       </span>
       <v-spacer />
       <new-campaign-dialog/>

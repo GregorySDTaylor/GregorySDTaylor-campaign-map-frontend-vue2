@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="my-16">
       <span>
-        <h1 class="ma-6 text-h1">{{ planet.name }}</h1>
+        <h1 class="text-h1">{{ planet.name }}</h1>
       </span>
       <v-spacer />
       <edit-planet-dialog

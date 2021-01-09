@@ -1,19 +1,21 @@
 <template>
   <v-container>
-    <v-row class="my-16">
-      <v-img
-        gradient="to left, rgba(0,0,0,0) 0%, rgba(18,18,18,1) 80%"
-        max-height="300"
-        position="top"
-        :src="planet.mapUrl"
-      >
-        <v-row>
-          <span>
-            <h2 class="ma-6 text-h2">Locations</h2>
-          </span>
-          <v-spacer />
-          <new-location-dialog :planetUrl="planet._links.self.href" />
-        </v-row>
+    <v-row>
+      <span>
+        <h2 class="text-h2">Locations</h2>
+      </span>
+      <v-spacer />
+      <new-location-dialog :planetUrl="planet._links.self.href" />
+    </v-row>
+    <v-row class="mb-16 mt-12">
+      <v-img :src="planet.mapUrl">
+        <location-map-icon
+          v-for="location in locations"
+          :key="location._links.self.href"
+          :location="location"
+          :campaign="campaign"
+          :planet="planet"
+        />
       </v-img>
     </v-row>
     <v-row>
@@ -40,11 +42,13 @@
 import axios from "@/campaignmap-restapi-axios.js";
 import LocationListItem from "@/components/location/LocationListItem.vue";
 import NewLocationDialog from "./NewLocationDialog.vue";
+import LocationMapIcon from "./LocationMapIcon.vue";
 
 export default {
   components: {
     LocationListItem,
     NewLocationDialog,
+    LocationMapIcon,
   },
   name: "LocationList",
   props: ["campaign", "planet", "campaignFactions"],

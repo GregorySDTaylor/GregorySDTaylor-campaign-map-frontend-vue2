@@ -15,6 +15,7 @@
       <v-spacer />
       <edit-location-dialog
         :location="location"
+        :planet="planet"
         @update:location="getLocation(locationUrl)"
       />
       <delete-location-dialog :location="location" />
@@ -73,6 +74,13 @@ export default {
           },
         },
       },
+      planet: {
+        _links: {
+          self: {
+            href: this.planetUrl,
+          },
+        },
+      },
       campaignFactions: [],
     };
   },
@@ -108,6 +116,11 @@ export default {
         this.getCampaignFactions(response.data._links.factions.href);
       });
     },
+    getPlanet(planetUrl) {
+      axios.get(planetUrl).then((response) => {
+        this.planet = response.data;
+      });
+    },
     getCampaignFactions(locationUrl) {
       axios.get(locationUrl).then((response) => {
         this.campaignFactions = response.data._embedded.factions;
@@ -116,6 +129,7 @@ export default {
   },
   mounted() {
     this.getLocation(this.locationUrl);
+    this.getPlanet(this.planetUrl);
     this.getCampaign(this.campaignUrl);
   },
 };

@@ -2,7 +2,7 @@
   <v-card>
     <v-form @submit="updateLocation">
       <v-card-title class="ma-6 text-h1">Edit Location</v-card-title>
-      <location-input v-bind.sync="location" class="ma-6" />
+      <location-input v-bind.sync="location" :planet="planet" class="ma-6" />
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn class="ma-6" color="primary" @click="$emit('close')">
@@ -28,25 +28,15 @@ export default {
   components: {
     LocationInput,
   },
-  props: ["campaignUrl", "planetUrl", "locationUrl"],
+  props: ["locationUrl", "planet"],
   data() {
     return {
-      planet: null,
-      campaign: null,
-      factions: [],
       location: {
         name: null,
         description: null,
         imageUrl: null,
         latitude: null,
         longitude: null,
-      },
-      controllingFaction: {
-        _links: {
-          self: {
-            href: "",
-          },
-        },
       },
     };
   },

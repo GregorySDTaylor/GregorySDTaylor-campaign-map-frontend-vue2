@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="deletePlanetDialog" max-width="290">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn class="ma-6" color="warning" v-bind="attrs" v-on="on">
+      <v-btn class="mt-6 ml-6" color="warning" v-bind="attrs" v-on="on">
         <v-icon>mdi-delete</v-icon>
       </v-btn>
     </template>

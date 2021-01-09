@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="newCampaignDialog" max-width="1000px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn class="ma-6" color="primary" v-bind="attrs" v-on="on">
+      <v-btn color="primary" v-bind="attrs" v-on="on">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </template>

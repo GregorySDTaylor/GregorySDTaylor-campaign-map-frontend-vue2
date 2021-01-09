@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="editPlanetDialog" max-width="1000px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn class="ma-6" color="primary" v-bind="attrs" v-on="on">
+      <v-btn class="mt-6 ml-6" color="primary" v-bind="attrs" v-on="on">
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
     </template>
